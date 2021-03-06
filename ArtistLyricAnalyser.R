@@ -1,6 +1,6 @@
 ###  Air logic test with functions
 ##User inputs artist
-artist <- "Kylie Minogue"
+artist <- "Enrique Iglesias"
 
 
 library(musicbrainz)
