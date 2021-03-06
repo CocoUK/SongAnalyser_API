@@ -98,7 +98,7 @@ artist_stats <- function(artist_data, result){
 #####################
 
 ##User inputs artist
-artist <- "The Beatles"
+artist <- "kylie minogue"
 
 
 # Search for artist mdid
