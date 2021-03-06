@@ -3,6 +3,7 @@
 library(wordcloud2)
 library(tm)
 
+artist_wordcloud <- function (lyric_count){
 ## create vector containing lyrics
 all_lyrics <- paste(unlist(lyric_count$lyrics), collapse =" ")
 
@@ -25,3 +26,4 @@ df <- data.frame(word = names(words),freq=words)
 
 ## Generate the world cloud
 wordcloud2(data=df, size=1.6, color='random-dark')
+}
