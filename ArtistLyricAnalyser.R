@@ -1,6 +1,6 @@
 ###  Air logic test with functions
 ##User inputs artist
-artist <- "Madonna"
+artist <- "Kylie Minogue"
 
 
 library(musicbrainz)
@@ -109,7 +109,7 @@ artist_wordcloud <- function (lyric_count){
     tm_map(stripWhitespace)
   docs <- tm_map(docs, content_transformer(tolower))
   docs <- tm_map(docs, removeWords, stopwords("english"))
-  
+
   ##document term matrix
   dtm <- TermDocumentMatrix(docs) 
   matrix <- as.matrix(dtm) 
@@ -157,4 +157,4 @@ avg_words <- get_summary_stats(lyric_count, "word_count", type= "mean_sd")
 print(paste("Average number of words by" , artist))
 print(as.data.frame(avg_words))  #check
 
-artist_wordcloud(lyric_count)
+print(artist_wordcloud(lyric_count))
