@@ -79,13 +79,14 @@ artist_stats <- function(artist_data, result){
   ## Join dataframe with albums, songs, lyrics and wordcount
   artist_data$title <- tolower(artist_data$title)
   df <- as.data.frame(inner_join(artist_data, result,  by= "title"))[,c("title","album","lyrics","word_count")]
-  df[which (df$lyrics == "(Instrumental)"),]$word_count <-"NA"
-  
+  try(df[which (df$lyrics == "(Instrumental)"),]$word_count <-"NA")  
   df$word_count <- as.numeric(df$word_count)
   
   df_summary <- df %>%
     group_by(album) %>%
     get_summary_stats("word_count",type = "mean_sd")
+  
+
   return(df_summary)
 }
 
@@ -112,4 +113,4 @@ titles <- Song_titles(artist_data)
 lyric_count <- song_lyrics(artist, titles)
 df <- artist_stats(artist_data, lyric_count)
 
-total <- get_summary_stats(lyric_count, "word_count", type= "mean_sd")
+avg_words <- get_summary_stats(lyric_count, "word_count", type= "mean_sd")
