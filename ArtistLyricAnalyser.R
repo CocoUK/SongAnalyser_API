@@ -1,11 +1,15 @@
 ###  Air logic test with functions
+##User inputs artist
+artist <- "Madonna"
+
 
 library(musicbrainz)
 library(dplyr)
 library(stringr)
 library(R.utils)
 library(rstatix)
-
+library(wordcloud2)
+library(tm)
 
 ###Functions
 ## Returns artist mbid number
@@ -90,6 +94,35 @@ artist_stats <- function(artist_data, result){
   return(df_summary)
 }
 
+###  wordcloud function
+artist_wordcloud <- function (lyric_count){
+  ## create vector containing lyrics
+  all_lyrics <- paste(unlist(lyric_count$lyrics), collapse =" ")
+  
+  # create corpus
+  docs <- Corpus(VectorSource(all_lyrics))
+  
+  #clean data
+  docs <- docs %>%
+    tm_map(removeNumbers) %>%
+    tm_map(removePunctuation) %>%
+    tm_map(stripWhitespace)
+  docs <- tm_map(docs, content_transformer(tolower))
+  docs <- tm_map(docs, removeWords, stopwords("english"))
+  
+  ##document term matrix
+  dtm <- TermDocumentMatrix(docs) 
+  matrix <- as.matrix(dtm) 
+  words <- sort(rowSums(matrix),decreasing=TRUE) 
+  df <- data.frame(word = names(words),freq=words)
+  
+  ## Generate the world cloud
+  wordcloud2(data=df, size=1.6, color='random-dark')
+}
+
+
+
+
 
 
 
@@ -97,8 +130,7 @@ artist_stats <- function(artist_data, result){
 
 #####################
 
-##User inputs artist
-artist <- "kylie minogue"
+
 
 # Search for artist mdid
 id <- artist_mbid(artist)
@@ -106,12 +138,23 @@ id <- artist_mbid(artist)
 albums <- artist_albums(id, 5)
 # extracts tracks per albums
 artist_data <- album_tracks(albums)
+print(paste("Songs by", artist))
+print( artist_data[,c("title","album")])  #check
+
 # titles of songs
 titles <- Song_titles(artist_data)
 # Results lyrics and wordcount
 lyric_count <- song_lyrics(artist, titles)
 
+print(paste("Number of words in" , artist, "songs"))
+print(lyric_count[,c("title","word_count")])  #check
+
 
 df <- artist_stats(artist_data, lyric_count)
-
+print(paste("Average number of words by" , artist, "albums"))
+print(as.data.frame(df)) #check
 avg_words <- get_summary_stats(lyric_count, "word_count", type= "mean_sd")
+print(paste("Average number of words by" , artist))
+print(as.data.frame(avg_words))  #check
+
+artist_wordcloud(lyric_count)
