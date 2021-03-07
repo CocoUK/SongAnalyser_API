@@ -1,6 +1,6 @@
 ###  Air logic test with functions
 ##User inputs artist
-artist <- "Enrique Iglesias"
+artist <- "queen"
 
 
 library(musicbrainz)
@@ -68,8 +68,12 @@ song_lyrics <- function (artist, title){
     my_content_from_json <- withTimeout(jsonlite::fromJSON(my_url)$lyrics, timeout = 10, onTimeout = "silent")
     if(is.null(my_content_from_json)) return(data.frame(lyrics = NA, word_count = NA))
     lyrics <- gsub("[\r\n]", " ", my_content_from_json)
+    #Remove words in '[]' in the lyrics.
+    lyrics <- gsub('\\[.*?]', '', lyrics)
     lyrics <- str_squish(lyrics)
     word_count <- str_count(lyrics, '\\s+') + 1
+    #If lyrics has word 'Instrumental' turn word count to NA.
+    if(grepl('Instrumental', lyrics, ignore.case = TRUE)) word_count <- NA
     data.frame(  lyrics, word_count)
   })) -> result
   #Rewrite song titles
