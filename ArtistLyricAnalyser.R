@@ -1,7 +1,6 @@
 ###  Air logic test with functions
 ##User inputs artist
-artist <- "queen"
-
+artist <- "Queen"
 
 library(musicbrainz)
 library(dplyr)
@@ -20,6 +19,7 @@ artist_mbid <- function(x){
     select(mbid) %>%
     slice(1) %>%
     pull()
+
   return(artist_id)
 }
 
@@ -87,7 +87,6 @@ artist_stats <- function(artist_data, result){
   ## Join dataframe with albums, songs, lyrics and wordcount
   artist_data$title <- tolower(artist_data$title)
   df <- as.data.frame(inner_join(artist_data, result,  by= "title"))[,c("title","album","lyrics","word_count")]
-  #try(df[which (df$lyrics == "(Instrumental)"),]$word_count <-"NA")  
   df$word_count <- as.numeric(df$word_count)
   
   df_summary <- df %>%
@@ -138,6 +137,7 @@ artist_wordcloud <- function (lyric_count){
 
 # Search for artist mdid
 id <- artist_mbid(artist)
+if(is.na(id))  stop("No Artist found")
 # extract a number of albums
 albums <- artist_albums(id, 5)
 # extracts tracks per albums
