@@ -23,8 +23,7 @@ All functions can be found in the functions.R file.  The main script is in the A
 Some test for the song_lyrics function that counts the number of words in the lyrics are provided in the test.R file. Additionally, a test for the summary of statistics function is given. The test data for this function is in an excel file "Test.xlsx".
 
 <h1> Shiny App </h1>
-A lightweight version of the code was implemented in a [Shiny App](https://cocouk.shinyapps.io/Artist_Lyrics_Analyser/)
-
+A lightweight version of the code was implemented in a [Shiny App](https://cocouk.shinyapps.io/Artist_Lyrics_Analyser).
 
 <h1> Things to do </h1>
 There are a lot of things to do to make this project nice:
