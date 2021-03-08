@@ -1,4 +1,0 @@
-git add .
-git commit -m "initial commit"
-git config --local credential.helper ""
-git push https://github.com/youraccount/repo.git --all
