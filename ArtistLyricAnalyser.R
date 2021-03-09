@@ -1,8 +1,6 @@
-<<<<<<< HEAD
+
 ###  Air logic test with functions
-=======
 ###  SongAnalyserAPI
->>>>>>> cbe079791ed730702b82c1ee9cbbf1933326b743
 
 source("functions.R")
 ##User inputs artist
