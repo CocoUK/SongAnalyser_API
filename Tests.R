@@ -26,8 +26,8 @@ test_that(
   "Checing for summary of statistics",
   {
     expect_equal(round(artist_stats(data, count)$mean,0),round(df$mean,0))
-<<<<<<< HEAD
+ 
   })
-=======
-  })
->>>>>>> cbe079791ed730702b82c1ee9cbbf1933326b743
+ 
+
+ 
